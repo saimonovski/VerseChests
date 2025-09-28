@@ -2,6 +2,8 @@ package io.github.saimonovski.versechest.config;
 
 public final class ConfigPaths {
 
+    public static final String IS_DEBUG_ENABLED = "debug-enabled";
+
     private ConfigPaths() {
     }
 

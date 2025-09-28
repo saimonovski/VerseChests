@@ -6,6 +6,8 @@
 config-version: 4
 #do not change this also
 server-id: ""
+#print additional information to console, turn on if bugs shown up then send logs to author of the plugin
+debug-enabled: false
 
 #Configuration of block using to create chests
 

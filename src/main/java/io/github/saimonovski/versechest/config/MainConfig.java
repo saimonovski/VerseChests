@@ -6,6 +6,7 @@ import io.github.saimonovski.versechest.entity.Rarity;
 import io.github.saimonovski.versechest.service.ChestItemService;
 import io.github.saimonovski.versechest.service.RarityService;
 import io.github.saimonovski.versechest.util.ChatUtil;
+import io.github.saimonovski.versechest.util.Logger;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -20,12 +21,35 @@ public class MainConfig {
     private final BlockCreator blockCreator;
     private final ChestConfiguration chestConfiguration;
     private final Rarities rarities;
-
-    public MainConfig(YamlDocument configFile) {
+    private final boolean isDebugEnabled;
+    private final long chestCooldown;
+    private final String serverId;
+    private final Logger logger;
+    public MainConfig(YamlDocument configFile, Logger logger) {
         this.configFile = configFile;
+        this.logger = logger;
         this.blockCreator = new BlockCreator();
         this.chestConfiguration = new ChestConfiguration();
         this.rarities = new Rarities();
+        this.serverId = configFile.getString(ConfigPaths.SERVER_ID);
+        this.chestCooldown = configFile.getLong(ConfigPaths.CHEST_COOLDOWN);
+        this.isDebugEnabled = configFile.getBoolean(ConfigPaths.IS_DEBUG_ENABLED, false);
+    }
+
+    public Logger getLogger() {
+        return logger;
+    }
+
+    public boolean isDebugEnabled() {
+        return isDebugEnabled;
+    }
+
+    public long getChestCooldown() {
+        return chestCooldown;
+    }
+
+    public String getServerId() {
+        return serverId;
     }
 
     public BlockCreator getBlockCreator() {
