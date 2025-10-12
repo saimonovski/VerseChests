@@ -1,6 +1,7 @@
-package io.github.saimonovski.versechest.service;
+package io.github.saimonovski.versechest.chest.rarity.service;
 
-import io.github.saimonovski.versechest.entity.Rarity;
+import io.github.saimonovski.versechest.chest.item.service.ChestItemService;
+import io.github.saimonovski.versechest.chest.rarity.Rarity;
 
 import java.util.*;
 import java.util.stream.Collectors;

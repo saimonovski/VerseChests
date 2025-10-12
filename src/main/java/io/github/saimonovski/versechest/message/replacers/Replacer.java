@@ -1,8 +1,9 @@
-package io.github.saimonovski.versechest.replacers;
+package io.github.saimonovski.versechest.message.replacers;
 
+import io.github.saimonovski.versechest.chest.Chest;
+import io.github.saimonovski.versechest.chestPlayer.service.PlayerService;
 import net.kyori.adventure.text.TextReplacementConfig;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 public class Replacer {
     public static TextReplacementConfig replacePlayer(Player player){
@@ -23,10 +24,10 @@ public class Replacer {
                 .replacement(amount+"")
                 .build();
     }
-    public static TextReplacementConfig replaceItemName(ItemStack itemStack){
+    public static TextReplacementConfig replacePlayerTime(Player player, PlayerService playerService, Chest chest){
         return TextReplacementConfig.builder()
-                .match("%item-name%")
-                .replacement(itemStack.displayName())
+                .match("%time%")
+                .replacement(playerService.getFormattedCooldownTime(player, chest))
                 .build();
     }
 }

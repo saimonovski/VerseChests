@@ -11,7 +11,7 @@ changes-saved-message:
   type: CHAT
 
 cooldown-message:
-  message: "<red> Wait <white> %player-cooldown%, before open this chest again"
+  message: "<red> Wait <white> %time%, before open this chest again"
   type: CHAT
 
 chest-created-message:

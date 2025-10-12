@@ -1,10 +1,8 @@
 package io.github.saimonovski.versechest.config;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
-import io.github.saimonovski.versechest.config.ConfigPaths;
-import io.github.saimonovski.versechest.entity.Rarity;
-import io.github.saimonovski.versechest.service.ChestItemService;
-import io.github.saimonovski.versechest.service.RarityService;
+import io.github.saimonovski.versechest.chest.rarity.Rarity;
+import io.github.saimonovski.versechest.chest.rarity.service.RarityService;
 import io.github.saimonovski.versechest.util.ChatUtil;
 import io.github.saimonovski.versechest.util.Logger;
 import org.bukkit.Material;
@@ -15,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MainConfig {
-
+    public static final String ADMIN_PERMISSION = "smv.verse.chests.admin";
     private final YamlDocument configFile;
 
     private final BlockCreator blockCreator;

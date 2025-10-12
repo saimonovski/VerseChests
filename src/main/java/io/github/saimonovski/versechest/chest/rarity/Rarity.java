@@ -1,4 +1,4 @@
-package io.github.saimonovski.versechest.entity;
+package io.github.saimonovski.versechest.chest.rarity;
 
 import io.github.saimonovski.versechest.config.RarityConfig;
 import org.jetbrains.annotations.NotNull;

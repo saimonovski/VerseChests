@@ -1,5 +1,6 @@
-package io.github.saimonovski.versechest.entity;
+package io.github.saimonovski.versechest.chest.item;
 
+import io.github.saimonovski.versechest.chest.rarity.Rarity;
 import org.bukkit.inventory.ItemStack;
 
 public class ChestItem {

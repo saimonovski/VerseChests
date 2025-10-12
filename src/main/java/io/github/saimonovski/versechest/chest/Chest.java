@@ -1,9 +1,7 @@
-package io.github.saimonovski.versechest.entity;
+package io.github.saimonovski.versechest.chest;
 
 import io.github.saimonovski.versechest.config.MainConfig;
 import org.bukkit.Location;
-
-import java.util.List;
 
 public record Chest(Location chestLocation, MainConfig config) {
    public void updateBlockMaterial(){
