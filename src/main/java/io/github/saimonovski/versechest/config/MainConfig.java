@@ -111,13 +111,8 @@ public class MainConfig {
     }
 
     public class Rarities {
-        RarityService service;
-
         private Rarities() {
 
-        }
-        private void loadRarityService(){
-            this.service = new RarityService(loadRarityMap());
         }
         private Map<String, Rarity> loadRarityMap(){
               Map<String, Rarity> rarityMap = new HashMap<>();
@@ -132,9 +127,7 @@ public class MainConfig {
             }
             return rarityMap;
         }
-        public RarityService getService(){
-            return this.service;
-        }
+
 
     }
 

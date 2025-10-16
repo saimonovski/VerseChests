@@ -3,6 +3,7 @@ package io.github.saimonovski.versechest.chestPlayer;
 import io.github.saimonovski.versechest.chest.Chest;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nullable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -45,5 +46,9 @@ public class ChestPlayer {
 
     public int getOpenedChests() {
         return this.chestOpenedCount;
+    }
+@Nullable
+    public LocalDateTime getCooldownEndDate(Chest chest) {
+        return chestCooldowns.get(chest);
     }
 }

@@ -1,5 +1,6 @@
 package io.github.saimonovski.versechest.listener;
 
+import com.google.inject.Inject;
 import io.github.saimonovski.versechest.chest.Chest;
 import io.github.saimonovski.versechest.chest.item.ChestItem;
 import io.github.saimonovski.versechest.chest.service.ChestService;
@@ -28,8 +29,7 @@ public class ChestOpenedListener implements Listener {
     private final ChestItemService chestItemService;
     private final PlayerService playerService;
 
-    private Map<UUID,Chest> chestMap = new HashMap<>();
-
+    @Inject
     public ChestOpenedListener(ChestService chestService, RarityService rarityService, ChestItemService chestItemService, PlayerService playerService) {
         this.chestService = chestService;
         this.rarityService = rarityService;

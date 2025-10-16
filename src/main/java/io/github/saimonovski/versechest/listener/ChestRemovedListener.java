@@ -1,5 +1,6 @@
 package io.github.saimonovski.versechest.listener;
 
+import com.google.inject.Inject;
 import io.github.saimonovski.versechest.chest.Chest;
 import io.github.saimonovski.versechest.chest.service.ChestService;
 import io.github.saimonovski.versechest.config.ConfigPaths;
@@ -12,6 +13,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class ChestRemovedListener implements Listener {
     private final ChestService chestService;
+
+    @Inject
     public ChestRemovedListener(ChestService chestService) {
         this.chestService = chestService;
     }

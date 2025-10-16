@@ -5,10 +5,9 @@ prefix: SMV-VerseChests
 load: POSTWORLD
 api-version: '1.20'
 author: saimonovski
-commands:
-  chestpvp:
-    permission: smv.verse.chests.admin
-    description: Commands to manage his plugin
 permissions:
   smv.verse.chests.admin:
     default: op
+softdepend:
+  - PlaceholderAPI
+  - MultiverseCore

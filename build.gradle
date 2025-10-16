@@ -46,6 +46,8 @@ dependencies {
     compileOnly 'me.clip:placeholderapi:2.11.6'
     //invui
     implementation "xyz.xenondevs.invui:invui:1.46"
+    //guice
+    implementation 'com.google.inject:guice:7.0.0'
 }
 
 def targetJavaVersion = 17
@@ -85,5 +87,6 @@ shadowJar{
     relocate 'dev.dejvokep.boostedyaml', 'io.saimonovski.verse.chests.lib'
     relocate("org.incento.cloud", "io.github.saimonovski.verse.chests.lib")
     relocate("xyz.xenodevs.invui","io.github.saimonovski.versechest.lib")
+    relocate("com.google.inject","io.github.saimonovski.versechest.lib")
 }
 

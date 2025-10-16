@@ -39,6 +39,7 @@ public class PlayerService {
     public String getFormattedCooldownTime(Player player, Chest chest){
         ChestPlayer chestPlayer = this.chestPlayers.get(player.getUniqueId());
         LocalDateTime cooldownEndDateTime = chestPlayer.getCooldownEndDate(chest);
+        if(cooldownEndDateTime == null) return "";
         LocalDateTime now = LocalDateTime.now();
         Duration between = Duration.between(cooldownEndDateTime,now);
         long seconds = between.toSeconds();

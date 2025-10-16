@@ -1,7 +1,9 @@
 package io.github.saimonovski.versechest.listener;
 
+import com.google.inject.Inject;
 import io.github.saimonovski.versechest.chest.service.ChestService;
 import io.github.saimonovski.versechest.config.MainConfig;
+import io.github.saimonovski.versechest.config.service.ConfigService;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -13,14 +15,15 @@ import org.bukkit.inventory.ItemStack;
 public class ChestCreatedListener implements Listener {
     private final ChestService chestService;
     private final MainConfig.BlockCreator blockCreator;
-    private final MainConfig.ChestConfiguration chestConfiguration;
+
     private final MainConfig mainConfig;
 
-    public ChestCreatedListener(ChestService chestService, MainConfig mainConfig) {
+    @Inject
+    public ChestCreatedListener(ChestService chestService, ConfigService configService) {
         this.chestService = chestService;
-        this.blockCreator = mainConfig.getBlockCreator();
-        this.chestConfiguration = mainConfig.getChestConfiguration();
-        this.mainConfig = mainConfig;
+        this.mainConfig = configService.getMainConfig();
+        this.blockCreator = this.mainConfig.getBlockCreator();
+
     }
     @EventHandler
     public void onPlayerPlaceBlock(BlockPlaceEvent e){
