@@ -8,6 +8,7 @@ import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
 import dev.dejvokep.boostedyaml.spigot.SpigotSerializer;
 import io.github.saimonovski.versechest.VerseChest;
+import io.github.saimonovski.versechest.common.Service;
 import io.github.saimonovski.versechest.config.MainConfig;
 import io.github.saimonovski.versechest.config.MessageConfig;
 
@@ -15,7 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-public class ConfigService {
+public class ConfigService implements Service {
     private final VerseChest verseChest;
     private MessageConfig messageConfig;
     private MainConfig mainConfig;
@@ -41,6 +42,7 @@ public class ConfigService {
                 GeneralSettings.builder().setSerializer(SpigotSerializer.getInstance()).build(),
                 LoaderSettings.builder().setAutoUpdate(true).build(), DumperSettings.DEFAULT, UpdaterSettings.builder().setVersioning(new BasicVersioning("config-version")).build());
     }
+    @Override
     public void reload()  {
         try {
             this.mainConfigYamlDocument.reload();

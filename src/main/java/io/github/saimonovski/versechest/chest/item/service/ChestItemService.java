@@ -2,10 +2,11 @@ package io.github.saimonovski.versechest.chest.item.service;
 
 import io.github.saimonovski.versechest.chest.item.ChestItem;
 import io.github.saimonovski.versechest.chest.rarity.Rarity;
+import io.github.saimonovski.versechest.common.Service;
 
 import java.util.*;
 
-public class ChestItemService {
+public class ChestItemService implements Service {
     private final Map<Rarity, List<ChestItem>> rarityChestItemMap = new TreeMap<>();
 
     public Set<ChestItem> randomizeChestItems(Map<Rarity,Integer> rarityIntegerMap, int totalAmount){
@@ -26,5 +27,10 @@ public class ChestItemService {
 
         });
     return chestItems;
+    }
+
+    @Override
+    public void reload() {
+        this.rarityChestItemMap.clear();
     }
 }

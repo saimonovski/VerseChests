@@ -2,6 +2,7 @@ package io.github.saimonovski.versechest.chestPlayer.service;
 
 import io.github.saimonovski.versechest.chest.Chest;
 import io.github.saimonovski.versechest.chestPlayer.ChestPlayer;
+import io.github.saimonovski.versechest.common.Service;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
@@ -10,10 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class PlayerService {
+public class PlayerService implements Service {
     private final Map<UUID, ChestPlayer> chestPlayers = new HashMap<>();
-//    private final Map<UUID, LocalDateTime> cooldownPlayers = new HashMap<>();
-//    private final Map<UUID,Integer> chestOpenedPlayers = new HashMap<>();
+
     private final int cooldownTime;
 
     public PlayerService(int cooldownTime) {
@@ -52,5 +52,10 @@ public class PlayerService {
         if(seconds > 0) timerString.append(hours).append("s ");
 
         return timerString.toString();
+    }
+
+    @Override
+    public void reload() {
+        this.chestPlayers.clear();
     }
 }
