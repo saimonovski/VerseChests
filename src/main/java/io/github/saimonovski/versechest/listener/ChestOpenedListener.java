@@ -4,10 +4,12 @@ import com.google.inject.Inject;
 import io.github.saimonovski.versechest.chest.Chest;
 import io.github.saimonovski.versechest.chest.item.ChestItem;
 import io.github.saimonovski.versechest.chest.service.ChestService;
+import io.github.saimonovski.versechest.config.MessageConfig;
 import io.github.saimonovski.versechest.gui.chest.ChestGui;
 import io.github.saimonovski.versechest.chest.item.service.ChestItemService;
 import io.github.saimonovski.versechest.chestPlayer.service.PlayerService;
 import io.github.saimonovski.versechest.chest.rarity.service.RarityService;
+import io.github.saimonovski.versechest.message.replacers.Replacer;
 import io.github.saimonovski.versechest.util.ChatUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
@@ -28,13 +30,15 @@ public class ChestOpenedListener implements Listener {
     private final RarityService rarityService;
     private final ChestItemService chestItemService;
     private final PlayerService playerService;
+    private final MessageConfig messages;
 
     @Inject
-    public ChestOpenedListener(ChestService chestService, RarityService rarityService, ChestItemService chestItemService, PlayerService playerService) {
+    public ChestOpenedListener(ChestService chestService, RarityService rarityService, ChestItemService chestItemService, PlayerService playerService, MessageConfig messages) {
         this.chestService = chestService;
         this.rarityService = rarityService;
         this.chestItemService = chestItemService;
         this.playerService = playerService;
+        this.messages = messages;
     }
 
     @Nullable
@@ -63,7 +67,7 @@ public class ChestOpenedListener implements Listener {
         if(chest == null) return;
         event.setCancelled(true);
         if(this.playerService.isPlayerOnCooldown(player, chest)){
-            //todo send a cooldown message
+            this.messages.cooldownMessage().send(player, Replacer.replacePlayerTime(player,this.playerService,chest));
             return;
         }
         openChestGui(chest, player);
@@ -78,5 +82,7 @@ public class ChestOpenedListener implements Listener {
 
         this.playerService.setPlayerToCooldown(player,gui.getChest());
         this.playerService.addPlayerOpenedChest(player);
+
+        this.messages.chestLootedMessage().send(player);
     }
 }

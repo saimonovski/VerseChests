@@ -14,16 +14,19 @@ import java.util.Map;
 
 public class MainConfig {
     public static final String ADMIN_PERMISSION = "smv.verse.chests.admin";
-    private final YamlDocument configFile;
+    private  YamlDocument configFile;
 
-    private final BlockCreator blockCreator;
-    private final ChestConfiguration chestConfiguration;
-    private final Rarities rarities;
-    private final boolean isDebugEnabled;
-    private final long chestCooldown;
-    private final String serverId;
-    private final Logger logger;
+    private  BlockCreator blockCreator;
+    private  ChestConfiguration chestConfiguration;
+    private  Rarities rarities;
+    private  boolean isDebugEnabled;
+    private  long chestCooldown;
+    private  String serverId;
+    private  Logger logger;
     public MainConfig(YamlDocument configFile, Logger logger) {
+       loadMainConfig(configFile, logger);
+    }
+    public void loadMainConfig(YamlDocument configFile, Logger logger){
         this.configFile = configFile;
         this.logger = logger;
         this.blockCreator = new BlockCreator();
@@ -33,7 +36,6 @@ public class MainConfig {
         this.chestCooldown = configFile.getLong(ConfigPaths.CHEST_COOLDOWN);
         this.isDebugEnabled = configFile.getBoolean(ConfigPaths.IS_DEBUG_ENABLED, false);
     }
-
     public Logger getLogger() {
         return logger;
     }

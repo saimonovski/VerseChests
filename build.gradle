@@ -48,6 +48,8 @@ dependencies {
     implementation "xyz.xenondevs.invui:invui:1.46"
     //guice
     implementation 'com.google.inject:guice:7.0.0'
+
+    implementation 'org.bstats:bstats-bukkit:3.0.2'
 }
 
 def targetJavaVersion = 17
@@ -88,5 +90,6 @@ shadowJar{
     relocate("org.incendo.cloud", "io.github.saimonovski.verse.chests.lib")
     relocate("xyz.xenodevs.invui","io.github.saimonovski.versechest.lib")
     relocate("com.google.inject","io.github.saimonovski.versechest.lib")
+    relocate("org.bstats","io.github.saimonovski.versechest.lib")
 }
 

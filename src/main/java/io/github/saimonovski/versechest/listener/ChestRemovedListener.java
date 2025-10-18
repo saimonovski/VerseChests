@@ -5,6 +5,7 @@ import io.github.saimonovski.versechest.chest.Chest;
 import io.github.saimonovski.versechest.chest.service.ChestService;
 import io.github.saimonovski.versechest.config.ConfigPaths;
 import io.github.saimonovski.versechest.config.MainConfig;
+import io.github.saimonovski.versechest.config.MessageConfig;
 import io.papermc.paper.event.block.BlockBreakBlockEvent;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
@@ -13,10 +14,11 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class ChestRemovedListener implements Listener {
     private final ChestService chestService;
-
+    private final MessageConfig messageConfig;
     @Inject
-    public ChestRemovedListener(ChestService chestService) {
+    public ChestRemovedListener(ChestService chestService, MessageConfig messageConfig) {
         this.chestService = chestService;
+        this.messageConfig = messageConfig;
     }
 
     @EventHandler
@@ -25,8 +27,10 @@ public class ChestRemovedListener implements Listener {
         if(!this.chestService.isChestExist(location)) return;
         if(e.getPlayer().isSneaking() && e.getPlayer().hasPermission(MainConfig.ADMIN_PERMISSION)){
             this.chestService.removeChest(location);
+            this.messageConfig.chestRemovedMessage().send(e.getPlayer());
             return;
         }
         e.setCancelled(true);
+
     }
 }

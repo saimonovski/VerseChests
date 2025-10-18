@@ -1,5 +1,6 @@
 package io.github.saimonovski.versechest.message;
 
+import io.github.saimonovski.versechest.message.replacers.Replacer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
 import org.bukkit.entity.Player;
@@ -15,7 +16,7 @@ public class Message {
 
     }
     public void send(Player player){
-        type.send(player,this.component);
+        type.send(player,this.component.replaceText(Replacer.replacePlayer(player)));
     }
     public void send(Player player, TextReplacementConfig replacement){
         this.type.send(player,this.component.replaceText(replacement));

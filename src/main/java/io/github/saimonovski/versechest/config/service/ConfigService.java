@@ -25,15 +25,26 @@ public class ConfigService implements Service {
 
     public ConfigService(VerseChest verseChest) {
         this.verseChest = verseChest;
+        initalizeMainConfig();
+        initalizeMessageConfig();
     }
     private void initalizeMainConfig(){
         try {
-             this.mainConfigYamlDocument =  initalizeConfig("config.yml");
+             this.mainConfigYamlDocument = initalizeConfig("config.yml");
         } catch (IOException e) {
             this.verseChest.logger().error("error while loading config.yml ! \n"+e.getCause());
             verseChest.getServer().getPluginManager().disablePlugin(verseChest);
         }
         this.mainConfig = new MainConfig(this.mainConfigYamlDocument,this.verseChest.logger());
+    }
+    private void initalizeMessageConfig(){
+        try {
+            this.messageConfigYamlDocument = initalizeConfig("messages.yml");
+        } catch (IOException e) {
+            this.verseChest.logger().error("error while loading messages.yml ! \n"+e.getCause());
+            verseChest.getServer().getPluginManager().disablePlugin(verseChest);
+        }
+        this.messageConfig = new MessageConfig(this.messageConfigYamlDocument);
     }
 
     private YamlDocument initalizeConfig(String path) throws IOException {
@@ -51,8 +62,8 @@ public class ConfigService implements Service {
             this.verseChest.logger().error("error while reloading configs ! \n "+e.getCause());
             verseChest.getServer().getPluginManager().disablePlugin(verseChest);
         }
-        this.messageConfig = new MessageConfig();
-        this.mainConfig = new MainConfig(this.mainConfigYamlDocument,this.verseChest.logger());
+        this.messageConfig.loadMessages(messageConfigYamlDocument);
+        this.mainConfig.loadMainConfig(mainConfigYamlDocument,verseChest.logger());
     }
 
     public MessageConfig getMessageConfig() {

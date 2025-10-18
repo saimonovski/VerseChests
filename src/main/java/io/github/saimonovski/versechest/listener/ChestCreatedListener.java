@@ -3,6 +3,7 @@ package io.github.saimonovski.versechest.listener;
 import com.google.inject.Inject;
 import io.github.saimonovski.versechest.chest.service.ChestService;
 import io.github.saimonovski.versechest.config.MainConfig;
+import io.github.saimonovski.versechest.config.MessageConfig;
 import io.github.saimonovski.versechest.config.service.ConfigService;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,15 +16,15 @@ import org.bukkit.inventory.ItemStack;
 public class ChestCreatedListener implements Listener {
     private final ChestService chestService;
     private final MainConfig.BlockCreator blockCreator;
-
+    private final MessageConfig messageConfig;
     private final MainConfig mainConfig;
 
     @Inject
-    public ChestCreatedListener(ChestService chestService, ConfigService configService) {
+    public ChestCreatedListener(ChestService chestService, MainConfig mainConfig, MessageConfig messages) {
         this.chestService = chestService;
-        this.mainConfig = configService.getMainConfig();
+        this.mainConfig = mainConfig;
         this.blockCreator = this.mainConfig.getBlockCreator();
-
+        this.messageConfig = messages;
     }
     @EventHandler
     public void onPlayerPlaceBlock(BlockPlaceEvent e){
@@ -32,6 +33,7 @@ public class ChestCreatedListener implements Listener {
         Location location = e.getBlock().getLocation();
         if(!blockCreatorItemStack.isSimilar(itemstack)) return;
         this.chestService.registerChest(location,this.mainConfig);
-        //todo send a message that chest has been created
+        this.messageConfig.chestCreatedMessage().send(e.getPlayer());
+
     }
 }
