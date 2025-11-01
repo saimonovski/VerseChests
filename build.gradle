@@ -50,6 +50,12 @@ dependencies {
     implementation 'com.google.inject:guice:7.0.0'
 
     implementation 'org.bstats:bstats-bukkit:3.0.2'
+//orm lite
+    implementation 'com.j256.ormlite:ormlite-core:6.1'
+    implementation 'com.j256.ormlite:ormlite-jdbc:6.1'
+
+    //database controller
+    
 }
 
 def targetJavaVersion = 17
