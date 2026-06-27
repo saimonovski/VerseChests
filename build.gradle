@@ -44,21 +44,18 @@ dependencies {
     implementation 'org.incendo:cloud-minecraft-extras:2.0.0-beta.10'
     //placeholder api
     compileOnly 'me.clip:placeholderapi:2.11.6'
-    //invui
-    implementation "xyz.xenondevs.invui:invui:1.46"
-    //guice
-    implementation 'com.google.inject:guice:7.0.0'
+
+
 
     implementation 'org.bstats:bstats-bukkit:3.0.2'
 //orm lite
     implementation 'com.j256.ormlite:ormlite-core:6.1'
     implementation 'com.j256.ormlite:ormlite-jdbc:6.1'
 
-    //database controller
-    
+
 }
 
-def targetJavaVersion = 17
+def targetJavaVersion = 21
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
 //    sourceCompatibility = javaVersion
@@ -72,7 +69,7 @@ tasks {
         // Configure the Minecraft version for our task.
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion("1.20")
+        minecraftVersion("1.21")
     }
 }
 tasks.withType(JavaCompile).configureEach {
@@ -94,8 +91,6 @@ processResources {
 shadowJar{
     relocate 'dev.dejvokep.boostedyaml', 'io.saimonovski.verse.chests.lib'
     relocate("org.incendo.cloud", "io.github.saimonovski.verse.chests.lib")
-    relocate("xyz.xenodevs.invui","io.github.saimonovski.versechest.lib")
-    relocate("com.google.inject","io.github.saimonovski.versechest.lib")
     relocate("org.bstats","io.github.saimonovski.versechest.lib")
 }
 

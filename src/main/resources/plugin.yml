@@ -1,6 +1,6 @@
 name: SMV-VerseChests
 version: '${version}'
-main: io.github.saimonovski.versechest.paper.VerseChest
+main: io.github.saimonovski.versechest.VerseChest
 prefix: SMV-VerseChests
 load: POSTWORLD
 api-version: '1.20'
