@@ -3,7 +3,7 @@
 config-version: 4
 
 chest-creator-message:
-  message: "<green> creator has been given"
+  message: "<green>chest  creator has been given"
   type: CHAT
 
 changes-saved-message:
@@ -11,7 +11,7 @@ changes-saved-message:
   type: CHAT
 
 cooldown-message:
-  message: "<red> Wait <white> %time%, before open this chest again"
+  message: "<red> Wait <white> %time%,<red> before open this chest again"
   type: CHAT
 
 chest-created-message:

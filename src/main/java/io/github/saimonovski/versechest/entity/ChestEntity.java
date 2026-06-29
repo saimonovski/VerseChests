@@ -36,6 +36,7 @@ public class ChestEntity {
 
         this.chestCooldownService.setCooldown(id,duration,timeUnit);
     }
+
     public ChestCooldownService getChestCooldownService(){
         return this.chestCooldownService;
     }

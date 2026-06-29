@@ -4,13 +4,18 @@
 
 #Do not change this
 config-version: 4
-#do not change this also
+
+#this is for commands messages only, rest messages edit in messages.yml
+#supported: en - english, pl - polish
+language: en
+#do not change until you want the chests in two servers be synchronized
+#then set the same value
+# REMEMBER ! the chests in two servers will be placed in the same location and coldowns will be also synchronized
 server-id: ""
 #print additional information to console, turn on if bugs shown up then send logs to author of the plugin
 debug-enabled: false
 
 #Configuration of block using to create chests
-
 blockCreator:
   material: BEDROCK
   name: "<gold> <bold>CreatorBlock"
@@ -29,20 +34,10 @@ chestCooldown: 3600
 
 #configuration of rarity items (chancee to drop etc.)
 # If you want to add your rarity just copy one of below sections and replace values
+#min items and amxItems cannot be more than provided in chestConfiguration section
 rarity:
-  rare:
-    chanceToDrop: 90 #In procent chance to drop item from this rarity setup
-    maxItems: 10 #How many max items should be displayed in the chest
-    minItems: 2 #How many min items should be displayed in the chest
-  epic:
-    chanceToDrop: 100 #In procent chance to drop item from this rarity setup
-    maxItems: 10 #How many max items should be displayed in the chest
-    minItems: 2 #How many min items should be displayed in the chest
-  mythic:
-    chanceToDrop: 100 #In procent chance to drop item from this rarity setup
-    maxItems: 10 #How many max items should be displayed in the chest
-    minItems: 2 #How many min items should be displayed in the chest
-  legendary:
-    chanceToDrop: 100 #In procent chance to drop item from this rarity setup
-    maxItems: 10 #How many max items should be displayed in the chest
-    minItems: 2 #How many min items should be displayed in the chest
+#  rare: - template to create rarity sections
+#    chanceToDrop: 90 #In procent chance to drop item from this rarity setup
+#    maxItems: 10 #How many max items should be displayed in the chest
+#    minItems: 2 #How many min items should be displayed in the chest
+

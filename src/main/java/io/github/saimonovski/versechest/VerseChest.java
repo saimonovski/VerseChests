@@ -1,5 +1,6 @@
 package io.github.saimonovski.versechest;
 
+import io.github.saimonovski.versechest.listener.ChestListener;
 import io.github.saimonovski.versechest.service.ChestCooldownService;
 import io.github.saimonovski.versechest.util.ChatUtil;
 import io.github.saimonovski.versechest.util.Logger;
@@ -38,10 +39,17 @@ public final class VerseChest extends JavaPlugin {
          metrics = new Metrics(this,PLUGIN_ID);
         this.logger.info("Bstats loaded");
         loadServices();
+        loadListeners();
         this.logger.info("Plugin loaded, if you met any issues report them by  discord private message: https://discord.com/users/1022368581436047420");
     }
 
+    private void loadListeners() {
+        this.logger.debug("loading listener");
+        this.getServer().getPluginManager().registerEvents(new ChestListener(this.logger)); //todo
+    }
+
     private void loadServices() {
+        //todo
     }
 
     @Override
@@ -53,8 +61,5 @@ public final class VerseChest extends JavaPlugin {
     public Logger logger() {
         return logger;
     }
-
-
-
 
 }
