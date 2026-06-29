@@ -1,40 +1,40 @@
 package io.github.saimonovski.versechest.util.message;
 
 import io.github.saimonovski.versechest.util.ChatUtil;
-import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public enum MessageType {
-    ACTIONBAR(player -> message -> {
-        message = ChatUtil.fix(PlaceholderAPI.setPlaceholders(player,MiniMessage.miniMessage().serialize(message)));
-        ChatUtil.sendActionBar(player,message);
+   ACTIONBAR(message -> {
+       ChatUtil.sendActionBar(message.player, message.buildComponent());
+   }),
+    TITLE(message -> {
+        ChatUtil.sendTitle(message.player, message.buildComponent());
     }),
-    TITLE(player -> message -> {
-        message = ChatUtil.fix(PlaceholderAPI.setPlaceholders(player,MiniMessage.miniMessage().serialize(message)));
-        ChatUtil.sendTitle(player,message);
+    SUBTITLE(message -> {
+        ChatUtil.sendSubtitle(message.player, message.buildComponent());
     }),
-    SUBTITLE(player -> message -> {
-        message = ChatUtil.fix(PlaceholderAPI.setPlaceholders(player,MiniMessage.miniMessage().serialize(message)));
-        ChatUtil.sendSubtitle(player,message);
+    CHAT(message -> {
+        message.player.sendMessage(message.buildComponent());
     }),
-    CHAT(player -> message -> {
-        message = ChatUtil.fix(PlaceholderAPI.setPlaceholders(player,MiniMessage.miniMessage().serialize(message)));
-        player.sendMessage(message);
-    }),
-    DISABLED(player -> message -> {
-    });
+    DISABLED(messageToSend -> {});
 
-    private final Function<Player, Consumer<Component>> object;
+    private final  Consumer<MessageToSend> object;
 
-    MessageType(Function<Player, Consumer<Component>> object) {
+    MessageType(Consumer<MessageToSend> object) {
         this.object = object;
     }
-    public void send(Player player, Component message){
-        this.object.apply(player).accept(message);
+    public void send(Player player, String message){
+        MessageToSend messageToSend = new MessageToSend(message, player);
+        this.object.accept(messageToSend);
     }
+    
+
+    private record MessageToSend(String message, Player player) {
+        Component buildComponent() {
+                return ChatUtil.fixWithPlaceholderApi(message, player);
+            }
+        }
 }

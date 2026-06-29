@@ -1,37 +1,33 @@
 package io.github.saimonovski.versechest.util.message;
 
-import io.github.saimonovski.versechest.util.message.replacers.Replacer;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextReplacementConfig;
 import org.bukkit.entity.Player;
 
+import java.util.Map;
+
 public class Message {
-    private  Component component;
+    private final String message;
     private final MessageType type;
 
 
-    public Message(Component component, MessageType type) {
-        this.component = component;
+    public Message(String message, MessageType type) {
+        this.message = message;
         this.type = type;
 
     }
-    public void send(Player player){
-        type.send(player,this.component.replaceText(Replacer.replacePlayer(player)));
+    public Message replace(String old, String text){
+        return new Message(this.message.replace(old,text), this.type);
     }
-    public void send(Player player, TextReplacementConfig replacement){
-        this.type.send(player,this.component.replaceText(replacement));
-    }
-    public void send(Player player, TextReplacementConfig... replacements){
-        Component comp = Component.text().append(component).build();
-        for (TextReplacementConfig replacement : replacements) {
-             comp = comp.replaceText(replacement);
+    public Message replace(Map<String, String> stringsToReplace){
+        String finalMessage = this.message;
+        for (var entry : stringsToReplace.entrySet()){
+            finalMessage = finalMessage.replace(entry.getKey(), entry.getValue());
         }
-        this.type.send(player,comp);
+        return new Message(finalMessage,this.type);
     }
-    public Component getText(){
-        return component;
+
+    public void send(Player player){
+        this.type.send(player,this.message);
     }
-    public void setText(Component component){
-        this.component = component;
-    }
+
+
 }

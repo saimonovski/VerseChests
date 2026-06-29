@@ -1,5 +1,6 @@
 package io.github.saimonovski.versechest.util;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -52,5 +53,10 @@ public class ChatUtil {
   }
   public static void sendActionBar(Player player, String message){
     Audience.audience(player).sendActionBar(fix(message));
+  }
+
+  public static Component fixWithPlaceholderApi(String message, Player player) {
+    message = PlaceholderAPI.setPlaceholders(player,message);
+    return fix(message);
   }
 }

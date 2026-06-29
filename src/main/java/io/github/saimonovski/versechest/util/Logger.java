@@ -12,7 +12,7 @@ public class Logger {
     }
     public void debug(String message){
         if(debugEnabled) {
-            plugin.getLogger().info("[DEBUG] " + message);
+            plugin.getLogger().info("- - - [DEBUG] -> " + message+ " <- - - -");
         }
     }
     public void info(String message){
