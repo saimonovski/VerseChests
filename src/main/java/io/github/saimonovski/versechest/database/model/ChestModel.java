@@ -1,4 +1,4 @@
-package io.github.saimonovski.versechest.database;
+package io.github.saimonovski.versechest.database.model;
 
 import io.github.saimonovski.versechest.entity.ChestEntity;
 import io.github.saimonovski.versechest.service.ChestCooldownService;

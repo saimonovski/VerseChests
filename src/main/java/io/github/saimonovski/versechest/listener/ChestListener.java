@@ -51,12 +51,13 @@ public class ChestListener implements Listener {
 
         if (chestEntity.getChestCooldownService().isStillOnCooldown(player.getUniqueId())) {
             this.logger.debug("player on cooldown, action disabled");
+            String cooldownTime = playerService.getFormattedCooldownTime(player,chestEntity);
 
-            //todo action hwile player is on cooldown
             return;
         }
 
         chestService.openChest(player, chestEntity);
+        playerService.increaseCount(player.getUniqueId());
 
     }
 
@@ -68,6 +69,10 @@ public class ChestListener implements Listener {
         //todo check if player has required permissions
         //todo check if player is sneaking
         //todo if all above is correct  remove chest
+        if (chestEntity == null) {
+            return;
+        }
+
         this.chestService.removeChest(chestEntity);
     }
 
