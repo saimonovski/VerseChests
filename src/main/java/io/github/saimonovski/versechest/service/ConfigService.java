@@ -1,6 +1,8 @@
 package io.github.saimonovski.versechest.service;
 
 import io.github.saimonovski.versechest.config.ChestConfig;
+import io.github.saimonovski.versechest.config.MessageConfig;
+
 //todo initialize configs and use config library
 public class ConfigService {
     private ChestConfig chestConfig;
@@ -8,5 +10,5 @@ public class ConfigService {
     public ChestConfig getChestConfig() {
         return this.chestConfig;
     }
-
+    public MessageConfig getMessageConfig();
 }

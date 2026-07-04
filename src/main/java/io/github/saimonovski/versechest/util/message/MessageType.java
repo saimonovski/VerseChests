@@ -7,9 +7,9 @@ import org.bukkit.entity.Player;
 import java.util.function.Consumer;
 
 public enum MessageType {
-   ACTIONBAR(message -> {
-       ChatUtil.sendActionBar(message.player, message.buildComponent());
-   }),
+    ACTIONBAR(message -> {
+        ChatUtil.sendActionBar(message.player, message.buildComponent());
+    }),
     TITLE(message -> {
         ChatUtil.sendTitle(message.player, message.buildComponent());
     }),
@@ -19,22 +19,24 @@ public enum MessageType {
     CHAT(message -> {
         message.player.sendMessage(message.buildComponent());
     }),
-    DISABLED(messageToSend -> {});
+    DISABLED(messageToSend -> {
+    });
 
-    private final  Consumer<MessageToSend> object;
+    private final Consumer<MessageToSend> object;
 
     MessageType(Consumer<MessageToSend> object) {
         this.object = object;
     }
-    public void send(Player player, String message){
+
+    public void send(Player player, String message) {
         MessageToSend messageToSend = new MessageToSend(message, player);
         this.object.accept(messageToSend);
     }
-    
+
 
     private record MessageToSend(String message, Player player) {
         Component buildComponent() {
-                return ChatUtil.fixWithPlaceholderApi(message, player);
-            }
+            return ChatUtil.fixWithPlaceholderApi(message, player);
         }
+    }
 }

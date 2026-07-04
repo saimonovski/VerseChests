@@ -6,7 +6,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.UUID;
 
@@ -17,33 +16,46 @@ public class ChestEntity {
     private final ConfigService configService;
 
 
-    public ChestEntity( Location location, UUID chestId, ConfigService configService) {
+    public ChestEntity(Location location, UUID chestId, ConfigService configService) {
         this.chestCooldownService = new ChestCooldownService();
         this.location = location;
         this.chestId = chestId;
         this.configService = configService;
+        updateBLock();
     }
-    public void updateBLock(){
+
+    public ChestEntity(Location location, UUID chestId, ConfigService configService, ChestCooldownService cooldownService) {
+        this.chestCooldownService = cooldownService;
+        this.chestId = chestId;
+        this.configService = configService;
+        this.location = location;
+        updateBLock();
+    }
+
+    public void updateBLock() {
         Block block = this.location.getBlock();
         Material material = this.configService.getChestConfig().chestMaterial();
 
         block.setType(material);
     }
-    public void putPlayerToCooldown(Player player){
+
+    public void putPlayerToCooldown(Player player) {
         int duration = this.configService.getChestConfig().chestCooldownDuration();
         ChestCooldownService.TimeUnit timeUnit = this.configService.getChestConfig().chestCooldownUnit();
         UUID id = player.getUniqueId();
 
-        this.chestCooldownService.setCooldown(id,duration,timeUnit);
+        this.chestCooldownService.setCooldown(id, duration, timeUnit);
     }
 
-    public ChestCooldownService getChestCooldownService(){
+    public ChestCooldownService getChestCooldownService() {
         return this.chestCooldownService;
     }
-    public UUID getChestId(){
+
+    public UUID getChestId() {
         return this.chestId;
     }
-    public Location getLocation(){
+
+    public Location getLocation() {
         return this.location;
     }
 }

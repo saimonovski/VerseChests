@@ -1,31 +1,54 @@
 package io.github.saimonovski.versechest.service;
 
-import io.github.saimonovski.versechest.VerseChest;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ChestCooldownService {
-    private final Map<UUID, Cooldown> cooldowns = new ConcurrentHashMap<>();
+    private Map<UUID, Cooldown> cooldowns = new ConcurrentHashMap<>();
 
-    public void clearCooldowns(){
+    public static ChestCooldownService deserialize(Map<UUID, Instant> serializedCooldowns) {
+        ChestCooldownService chestCooldownService = new ChestCooldownService();
+        Map<UUID, Cooldown> cooldowns = new ConcurrentHashMap<>();
+        serializedCooldowns.forEach((id, instant) -> {
+            if (instant.isAfter(Instant.now())) {
+                cooldowns.put(id, new Cooldown(instant));
+            }
+        });
+        chestCooldownService.setCooldownMap(cooldowns);
+        return chestCooldownService;
+    }
+
+    public void clearCooldowns() {
         this.cooldowns.clear();
     }
-    public void clearCooldowns(UUID id){
+
+    private void setCooldownMap(Map<UUID, Cooldown> cooldowns) {
+        this.cooldowns = cooldowns;
+    }
+
+    public void clearCooldowns(UUID id) {
         this.cooldowns.remove(id);
     }
-    public void setCooldown(@NotNull UUID id,   int duration, @NotNull TimeUnit timeUnit) {
+
+    public void setCooldown(@NotNull UUID id, int duration, @NotNull TimeUnit timeUnit) {
         if (duration <= 0) {
             cooldowns.remove(id);
             return;
         }
 
         cooldowns.put(id, new Cooldown(Instant.now().plus(timeUnit.toDuration(duration))));
+    }
+
+    public Map<UUID, Instant> serializeCooldowns() {
+        Map<UUID, Instant> serialized = new HashMap<>();
+        cooldowns.forEach((uuid, cooldown) -> serialized.put(uuid, cooldown.expiresAt));
+        return serialized;
     }
 
     public boolean isStillOnCooldown(@NotNull UUID id) {

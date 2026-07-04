@@ -3,11 +3,8 @@
 # Version: 2.0
 
 #Do not change this
-config-version: 4
+config-version: 5
 
-#this is for commands messages only, rest messages edit in messages.yml
-#supported: en - english, pl - polish
-language: en
 #do not change until you want the chests in two servers be synchronized
 #then set the same value
 # REMEMBER ! the chests in two servers will be placed in the same location and coldowns will be also synchronized

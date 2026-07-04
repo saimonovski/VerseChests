@@ -4,24 +4,28 @@ import io.github.saimonovski.versechest.VerseChest;
 
 public class Logger {
     private final VerseChest plugin;
-    private  boolean debugEnabled;
+    private boolean debugEnabled;
 
     public Logger(VerseChest plugin, boolean debugEnabled) {
         this.plugin = plugin;
         this.debugEnabled = debugEnabled;
     }
-    public void debug(String message){
-        if(debugEnabled) {
-            plugin.getLogger().info("- - - [DEBUG] -> " + message+ " <- - - -");
+
+    public void debug(String message) {
+        if (debugEnabled) {
+            plugin.getLogger().info("- - - [DEBUG] -> " + message + " <- - - -");
         }
     }
-    public void info(String message){
+
+    public void info(String message) {
         plugin.getLogger().info(message);
     }
-    public void warning(String message){
+
+    public void warning(String message) {
         plugin.getLogger().warning(message);
     }
-    public void error(String message){
+
+    public void error(String message) {
         plugin.getLogger().severe(message);
     }
 

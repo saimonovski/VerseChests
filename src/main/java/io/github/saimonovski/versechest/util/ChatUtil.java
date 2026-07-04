@@ -12,51 +12,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChatUtil {
-  private static final LegacyComponentSerializer LEGACY_SERIALIZER = LegacyComponentSerializer.builder()
-          .character('&')
-          .hexColors()
-          .build();
-  private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
-  public static Component fix(String message) {
-    if (message.contains("<") && message.contains(">")) {
-      try {
-        return
-                Component.text().append(MINI_MESSAGE.deserialize(message)).build();
+    private static final LegacyComponentSerializer LEGACY_SERIALIZER = LegacyComponentSerializer.builder()
+            .character('&')
+            .hexColors()
+            .build();
+    private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
-      } catch (Exception e) {
+    public static Component fix(String message) {
+        if (message.contains("<") && message.contains(">")) {
+            try {
+                return
+                        Component.text().append(MINI_MESSAGE.deserialize(message)).build();
+
+            } catch (Exception e) {
+                return LEGACY_SERIALIZER.deserialize(message);
+            }
+        }
         return LEGACY_SERIALIZER.deserialize(message);
-      }
     }
-    return LEGACY_SERIALIZER.deserialize(message);
-    }
-    public static List<Component> fix(List<String> list){
-      List<Component> components = new ArrayList<>();
+
+    public static List<Component> fix(List<String> list) {
+        List<Component> components = new ArrayList<>();
         for (String s : list) {
             components.add(fix(s));
         }
         return components;
     }
-    public static void sendTitle(Player player, Component message){
-      Audience.audience(player).sendTitlePart(TitlePart.TITLE,message);
-    }
-  public static void sendSubtitle(Player player, Component message){
-    Audience.audience(player).sendTitlePart(TitlePart.SUBTITLE,message);
-  }
-  public static void sendActionBar(Player player, Component message){
-    Audience.audience(player).sendActionBar(message);
-  }
-  public static void sendTitle(Player player, String message){
-    Audience.audience(player).sendTitlePart(TitlePart.TITLE,fix(message));
-  }
-  public static void sendSubtitle(Player player, String message){
-    Audience.audience(player).sendTitlePart(TitlePart.SUBTITLE,fix(message));
-  }
-  public static void sendActionBar(Player player, String message){
-    Audience.audience(player).sendActionBar(fix(message));
-  }
 
-  public static Component fixWithPlaceholderApi(String message, Player player) {
-    message = PlaceholderAPI.setPlaceholders(player,message);
-    return fix(message);
-  }
+    public static void sendTitle(Player player, Component message) {
+        Audience.audience(player).sendTitlePart(TitlePart.TITLE, message);
+    }
+
+    public static void sendSubtitle(Player player, Component message) {
+        Audience.audience(player).sendTitlePart(TitlePart.SUBTITLE, message);
+    }
+
+    public static void sendActionBar(Player player, Component message) {
+        Audience.audience(player).sendActionBar(message);
+    }
+
+    public static void sendTitle(Player player, String message) {
+        Audience.audience(player).sendTitlePart(TitlePart.TITLE, fix(message));
+    }
+
+    public static void sendSubtitle(Player player, String message) {
+        Audience.audience(player).sendTitlePart(TitlePart.SUBTITLE, fix(message));
+    }
+
+    public static void sendActionBar(Player player, String message) {
+        Audience.audience(player).sendActionBar(fix(message));
+    }
+
+    public static Component fixWithPlaceholderApi(String message, Player player) {
+        message = PlaceholderAPI.setPlaceholders(player, message);
+        return fix(message);
+    }
 }

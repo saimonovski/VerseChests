@@ -18,6 +18,7 @@ public class ChestListener implements Listener {
     private final PlayerService playerService;
     private final ChestService chestService;
     private final Logger logger;
+
     public ChestListener(PlayerService playerService, ChestService chestService, Logger logger) {
         this.playerService = playerService;
         this.chestService = chestService;
@@ -25,41 +26,42 @@ public class ChestListener implements Listener {
     }
 
     @EventHandler
-    private void onPlayerOpenChest(PlayerInteractEvent event){
-        if(!event.getAction().isRightClick()) {
+    private void onPlayerOpenChest(PlayerInteractEvent event) {
+        if (!event.getAction().isRightClick()) {
             return;
         }
 
         Block clickedBlock = event.getClickedBlock();
 
-        if(clickedBlock == null || clickedBlock.isLiquid() || clickedBlock.getType().isAir()){
+        if (clickedBlock == null || clickedBlock.isLiquid() || clickedBlock.getType().isAir()) {
             return;
         }
         Location location = clickedBlock.getLocation();
 
         ChestEntity chestEntity = this.chestService.findChest(location);
 
-        if(chestEntity == null){
+        if (chestEntity == null) {
             return;
         }
 
         Player player = event.getPlayer();
-        this.logger.debug("Chest opened, id: " +chestEntity.getChestId());
-        this.logger.debug("By: "+player.getName());
 
-       if (chestEntity.getChestCooldownService().isStillOnCooldown(player.getUniqueId())){
-           this.logger.debug("player on cooldown action disabled");
-           //todo action hwile player is on cooldown
-       return;
-       }
-       this.logger.debug("chest looted by player putting on cooldown");
-       chestEntity.putPlayerToCooldown(player);
-       //todo send a message
-        this.playerService.increaseCount(player.getUniqueId());
-        this.logger.debug("current chests opened by player: "+this.playerService.getOpenedChestCount(player.getUniqueId()));
+        this.logger.debug("Chest opened, id: " + chestEntity.getChestId());
+        this.logger.debug("By: " + player.getName());
+
+        if (chestEntity.getChestCooldownService().isStillOnCooldown(player.getUniqueId())) {
+            this.logger.debug("player on cooldown, action disabled");
+
+            //todo action hwile player is on cooldown
+            return;
+        }
+
+        chestService.openChest(player, chestEntity);
+
     }
+
     @EventHandler
-    private void onPlayerDestroyChest(BlockBreakEvent blockBreakEvent){
+    private void onPlayerDestroyChest(BlockBreakEvent blockBreakEvent) {
         Location location = blockBreakEvent.getBlock().getLocation();
         ChestEntity chestEntity = this.chestService.findChest(location);
         Player player = blockBreakEvent.getPlayer();
@@ -68,13 +70,17 @@ public class ChestListener implements Listener {
         //todo if all above is correct  remove chest
         this.chestService.removeChest(chestEntity);
     }
+
     @EventHandler
-    private void onPlayerPlaceChestCreator(BlockPlaceEvent event){
+    private void onPlayerPlaceChestCreator(BlockPlaceEvent event) {
         ItemStack itemToPlace = event.getItemInHand();
         //todo check if the item is the same as defined in config for block creator
-        event.getBlock().getLocation();
+        Location location = event.getBlock().getLocation();
         //todo create a chest
-        ChestEntity chestEntity;
+        ChestEntity chestEntity = chestService.createChest(location);
+        chestEntity.updateBLock();
+
+
         // chestEntity.updateBLock();
         //todo send a message
     }
