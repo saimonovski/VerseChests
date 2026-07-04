@@ -12,6 +12,8 @@ import io.github.saimonovski.versechest.service.ConfigService;
 import io.github.saimonovski.versechest.service.PlayerService;
 import io.github.saimonovski.versechest.util.ChatUtil;
 import io.github.saimonovski.versechest.util.Logger;
+import io.github.saimonovski.versechest.util.message.Message;
+import io.github.saimonovski.versechest.util.message.MessageType;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,7 +22,6 @@ import org.jetbrains.annotations.NotNull;
 
 public final class VerseChest extends JavaPlugin {
     private Logger logger;
-
     private Metrics metrics;
     private Database database;
     private ChestRepository chestRepository;
@@ -29,6 +30,8 @@ public final class VerseChest extends JavaPlugin {
     private ChestService chestService;
     private PlayerService playerService;
     private static final int PLUGIN_ID = 27630;
+    public static String ADMIN_PERMISSION = "smv.versechests.admin";
+    public static Message NO_PERMISSION_MESSAGE = new Message("<red> You don't have permission for this.", MessageType.CHAT);
 
     @Override
     public void onEnable() {
@@ -60,7 +63,7 @@ public final class VerseChest extends JavaPlugin {
 
     private void loadListeners() {
         this.logger.debug("loading listener");
-        this.getServer().getPluginManager().registerEvents(new ChestListener(this.playerService, this.chestService, this.logger), this);
+        this.getServer().getPluginManager().registerEvents(new ChestListener(this.playerService, this.chestService, this.logger, this.configService), this);
     }
 
     private void loadServices() {

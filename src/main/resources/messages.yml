@@ -1,27 +1,13 @@
 #Messages
 #Author: Saimonovski
-config-version: 4
-
-chest-creator-message:
-  message: "<green>chest  creator has been given"
-  type: CHAT
-
-changes-saved-message:
-  message: "<green> changes saved"
-  type: CHAT
+config-version: 1
 
 cooldown-message:
   message: "<red> Wait <white> %time%,<red> before open this chest again"
-  type: CHAT
-
-chest-created-message:
-  message: "<green> Chest has been created."
   type: CHAT
 
 chest-looted-message:
   message: "<gold> chest has been looted!"
   type: CHAT
 
-chest-removed-message:
-  message: "<red> Chest has been removed!"
-  type: CHAT
+

@@ -1,9 +1,12 @@
 # SMV VerseChests
 # Author: Saimonovski
 # Version: 2.0
+#permissions:
+#   smv.versechests.admin
+
 
 #Do not change this
-config-version: 5
+config-version: 1
 
 #do not change until you want the chests in two servers be synchronized
 #then set the same value
@@ -33,7 +36,7 @@ chestCooldown: 3600
 # If you want to add your rarity just copy one of below sections and replace values
 #min items and amxItems cannot be more than provided in chestConfiguration section
 rarity:
-#  rare: - template to create rarity sections
+#  rare: # template to create rarity sections
 #    chanceToDrop: 90 #In procent chance to drop item from this rarity setup
 #    maxItems: 10 #How many max items should be displayed in the chest
 #    minItems: 2 #How many min items should be displayed in the chest

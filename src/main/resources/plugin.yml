@@ -6,8 +6,11 @@ load: POSTWORLD
 api-version: '1.21'
 author: saimonovski
 permissions:
-  smv.verse.chests.admin:
+  smv.versechests.admin:
     default: op
-softdepend:
+    description: gives you access to admin commands and full management of chests
+
+depend:
   - PlaceholderAPI
+softdepend:
   - MultiverseCore

@@ -1,7 +1,9 @@
 package io.github.saimonovski.versechest.config;
 
 import io.github.saimonovski.versechest.service.ChestCooldownService;
+import io.github.saimonovski.versechest.util.message.Message;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 public class ChestConfig {
     private final Material chestMaterial;
@@ -24,5 +26,10 @@ public class ChestConfig {
 
     public ChestCooldownService.TimeUnit chestCooldownUnit() {
         return chestCooldownUnit;
+    }
+
+
+    public ItemStack getItemCreator() {
+        //todo
     }
 }
