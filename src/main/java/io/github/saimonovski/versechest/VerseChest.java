@@ -10,8 +10,10 @@ import io.github.saimonovski.versechest.listener.ChestListener;
 import io.github.saimonovski.versechest.service.ChestService;
 import io.github.saimonovski.versechest.service.ConfigService;
 import io.github.saimonovski.versechest.service.PlayerService;
+import io.github.saimonovski.versechest.test.GuiTest;
 import io.github.saimonovski.versechest.util.ChatUtil;
 import io.github.saimonovski.versechest.util.Logger;
+import io.github.saimonovski.versechest.util.gui.GuiManager;
 import io.github.saimonovski.versechest.util.message.Message;
 import io.github.saimonovski.versechest.util.message.MessageType;
 import org.bstats.bukkit.Metrics;
@@ -51,7 +53,15 @@ public final class VerseChest extends JavaPlugin {
                                           <gradient:#FFCF00:#FF8600>by saimonovski </gradient>
                 \s""";
         Bukkit.getConsoleSender().sendMessage(ChatUtil.fix(text));
+
         this.logger = new Logger(this, false);
+        if(new GuiTest(this).prepare()){
+            this.logger.info("started testing session");
+            this.logger.setDebugEnabled(true);
+            GuiManager manager = new GuiManager();
+            manager.registerManager(this);
+            return;
+        }
         this.logger.info("Version: " + getPluginMeta().getVersion());
         this.logger.info("loading Bstats");
         metrics = new Metrics(this, PLUGIN_ID);

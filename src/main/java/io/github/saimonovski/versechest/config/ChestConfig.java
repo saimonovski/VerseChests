@@ -30,6 +30,6 @@ public class ChestConfig {
 
 
     public ItemStack getItemCreator() {
-        //todo
+        return null;//todo
     }
 }

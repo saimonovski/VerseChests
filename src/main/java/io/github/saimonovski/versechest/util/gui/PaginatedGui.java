@@ -1,6 +1,6 @@
-package io.github.saimonovski.versechest.gui.api;
+package io.github.saimonovski.versechest.util.gui;
 
-import io.github.saimonovski.versechest.gui.api.item.GuiItem;
+import io.github.saimonovski.versechest.util.gui.item.GuiItem;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -15,10 +15,10 @@ public abstract class  PaginatedGui implements Gui {
     protected Set<Integer> contentSlots(){
         Set<Integer> contentSlots = new HashSet<>();
         for(int slot = 0; slot<size(); slot++){
-            if(getNavBar().takenSlots().contains(slot)){
+            if(getNavBar() != null && getNavBar().takenSlots().contains(slot)){
                 continue;
             }
-            if(background().takenSlots().contains(slot)){
+            if(background() != null && background().takenSlots().contains(slot)){
                 continue;
             }
             contentSlots.add(slot);
@@ -33,20 +33,20 @@ public abstract class  PaginatedGui implements Gui {
     @Override
     public void clickAction(InventoryClickEvent e) {
         int slot = e.getSlot();
-        if(background().takenSlots().contains(slot)){
+        if(background() != null && background().takenSlots().contains(slot)){
             e.setCancelled(true);
             return;
         }
-        if(getNavBar().takenSlots().contains(slot)){
-            getNavBar().getClickAction().accept(e);
+        if(getNavBar() != null && getNavBar().takenSlots().contains(slot)){
+            e.setCancelled(true);
+            getNavBar().onClick(e, this);
             return;
         }
 
-        PageItems items = pages.get(currentPage());
+        PageItems items = pages.computeIfAbsent(page, ignored -> new PageItems(new HashMap<>(), new HashMap<>()));
         GuiItem guiItem = items.guiItems.get(slot);
         if (guiItem != null){
-            guiItem.getClickAction().accept(e);
-            return;
+            guiItem.onClick(e);
         }
 
     }
@@ -57,13 +57,11 @@ public abstract class  PaginatedGui implements Gui {
     public boolean isFirstPage(){
         return currentPage() == 1;
    }
+   @Nullable
     protected abstract  NavBar getNavBar();
 
     protected void saveCurrentPage() {
         PageItems items = pages.computeIfAbsent(page, ignored -> new PageItems(new HashMap<>(), new HashMap<>()));
-
-
-        int index = 0;
         for (int slot : contentSlots()) {
             ItemStack item = getInventory().getItem(slot);
             items.saveSlot(slot,item == null ? null : item.clone());
@@ -71,17 +69,27 @@ public abstract class  PaginatedGui implements Gui {
         this.pages.put(currentPage(),items);
     }
     protected void renderPage() {
-       getInventory().clear();
+        getInventory().clear();
         PageItems items = pages.computeIfAbsent(page, ignored -> new PageItems(new HashMap<>(), new HashMap<>()));
+        if(background() != null) {
+            background().render(this);
+        }
         for (int slot : contentSlots()) {
             items.updateSlot(slot, getInventory());
         }
-        getNavBar().render(this);
+        if(getNavBar() != null) {
+            getNavBar().render(this);
+        }
     }
 
+    @Override
+    public void setItem(int slot, GuiItem guiItem) {
+        PageItems items = pages.computeIfAbsent(page, ignored -> new PageItems(new HashMap<>(), new HashMap<>()));
+        items.guiItems().put(slot,guiItem);
+        items.updateSlot(slot, getInventory());
+    }
 
-
-    private void nextPage(){
+    public void nextPage(){
         if(isLastPage()){
             return;
         }
@@ -89,7 +97,7 @@ public abstract class  PaginatedGui implements Gui {
         page++;
         renderPage();
     }
-    private void previousPage(){
+    public void previousPage(){
         if(isFirstPage()){
             return;
         }

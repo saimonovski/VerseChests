@@ -4,10 +4,10 @@ import io.github.saimonovski.versechest.util.message.Message;
 
 public class MessageConfig {
     public Message playerOnCooldownMessage() {
-    //todo
+    return null; //todo
 
     }
     public Message getChestLootedMessage() {
-        //todo
+        return null; //todo
     }
 }

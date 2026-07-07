@@ -1,7 +1,6 @@
-package io.github.saimonovski.versechest.gui.api.listener;
+package io.github.saimonovski.versechest.util.gui.listener;
 
-import io.github.saimonovski.versechest.gui.api.Gui;
-import io.github.saimonovski.versechest.gui.api.GuiManager;
+import io.github.saimonovski.versechest.util.gui.Gui;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;

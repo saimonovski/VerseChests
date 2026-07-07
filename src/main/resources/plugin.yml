@@ -10,7 +10,8 @@ permissions:
     default: op
     description: gives you access to admin commands and full management of chests
 
-depend:
-  - PlaceholderAPI
+
+
 softdepend:
   - MultiverseCore
+  - PlaceholderAPI

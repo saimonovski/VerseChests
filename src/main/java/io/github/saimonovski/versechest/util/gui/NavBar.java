@@ -1,13 +1,9 @@
-package io.github.saimonovski.versechest.gui.api;
+package io.github.saimonovski.versechest.util.gui;
 
-import io.github.saimonovski.versechest.gui.api.item.GuiItem;
-import io.github.saimonovski.versechest.gui.api.item.WidgetItem;
-import net.kyori.adventure.text.event.ClickEvent;
+import io.github.saimonovski.versechest.util.gui.item.WidgetItem;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
 
 public interface NavBar {
     WidgetItem nextPageItem();
@@ -22,5 +18,7 @@ public interface NavBar {
 
     List<Integer> takenSlots();
 
-    Consumer<InventoryClickEvent> getClickAction();
+
+
+    void onClick(InventoryClickEvent e, PaginatedGui paginatedGui);
 }
